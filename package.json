@@ -1,0 +1,23 @@
+{
+  "name": "create-a-team",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --verbose tests/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maggiejoe/create-a-team.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maggiejoe/create-a-team/issues"
+  },
+  "homepage": "https://github.com/maggiejoe/create-a-team#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4",
+    "jest": "^28.1.1"
+  }
+}

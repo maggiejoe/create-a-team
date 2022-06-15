@@ -1,6 +1,6 @@
 const Intern = require('../lib/Intern');
 
-const intern = new Intern('Gabriella', '011', 'gabriella@email.com', 'UoT');
+const intern = new Intern('Gabriella', 11, 'gabriella@email.com', 'UoT');
 
 test('Can create an intern object', () => {
     expect(typeof(intern)).toBe('object');
@@ -11,10 +11,10 @@ test('Does getName show a name', () => {
 });
 
 test('Does getId show an id', () => {
-    expect(intern.getId()).toBe('011');
+    expect(intern.getId()).toBe(11);
 });
 
-test('Does getemail show an email', () => {
+test('Does getEmail show an email', () => {
     expect(intern.getEmail()).toBe('gabriella@email.com');
 });
 

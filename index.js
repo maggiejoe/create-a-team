@@ -63,8 +63,8 @@ const addManager = () => {
             }
         },
     ])
-    .then (managerData => {
-        const { managerName, managerId, managerEmail, officeNumber } = managerData;
+    .then (managerObj => {
+        const { managerName, managerId, managerEmail, officeNumber } = managerObj;
         const manager = new Manager (managerName, managerId, managerEmail, officeNumber);
 
         employeeArr.push(manager);
@@ -117,6 +117,73 @@ const addEmployee = () => {
                     return false;
                 }
             }
+        },
+        {
+            type: 'input',
+            name: 'github',
+            message: 'Enter employees GitHub username',
+            when: (employeeInput) => employeeInput.role === 'Engineer',
+            validate: github => {
+                if (github) {
+                    return true
+                } else {
+                    console.log('You must enter the employees github username');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'school',
+            message: 'Enter employees school',
+            when: (employeeInput) => employeeInput.role === 'Intern',
+            validate: school => {
+                if (school) {
+                    return true
+                } else {
+                    console.log('You must enter the employees github username');
+                    return false;
+                }
+            }
+        },
+        addAnotherEmployee()
+    ])
+    .then(employeeObj => {
+        let { employeeName, employeeRole, employeeId, employeeEmail, github, school} = employeeObj;
+
+        let employee;
+
+        if (role === 'Intern') {
+            employee = new Intern (employeeName, employeeId, employeeEmail, school);
+        } else if (role === 'Engineer') {
+            employee = new Engineer (employeeName, employeeId, employeeEmail, github);
+        }
+
+        employeeArr.push(employee);
+    })
+}
+
+const addAnotherEmployee = () => {
+    inquirer.prompt([
+        {
+            type: 'confirm',
+            name: 'confirmAnotherEmployee',
+            message: 'Would you like to add another employee?'
         }
     ])
+    .then(response => {
+        if(response.confirmAnotherEmployee) {
+            addEmployee();
+        } else {
+            const startApp = generateHTML(employeeArr);
+
+            fs.writeFile('./dist/index.html', startApp, err => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Your application has been created!")
+                }
+            })
+        }
+    })
 }

@@ -1,15 +1,15 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
-const employee = require('./lib/Employee')
-const engineer = require('./lib/Engineer');
-const intern = require('./lib/Intern');
-const manager = require('./lib/Manager');
+const Employee = require('./lib/Employee')
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+const Manager = require('./lib/Manager');
 
 const employeeArr = [];
 
 const addManager = () => {
-    inquirer.prompt([
+    return inquirer.prompt([
         {
             type: 'input',
             name: 'managerName',
@@ -68,11 +68,12 @@ const addManager = () => {
         const manager = new Manager (managerName, managerId, managerEmail, officeNumber);
 
         employeeArr.push(manager);
+        console.log(manager);
     })
 }
 
 const addEmployee = () => {
-    inquirer.prompt([
+    return inquirer.prompt([
         {
             type: 'input',
             name: 'employeeName',
@@ -122,7 +123,7 @@ const addEmployee = () => {
             type: 'input',
             name: 'github',
             message: 'Enter employees GitHub username',
-            when: (employeeInput) => employeeInput.role === 'Engineer',
+            when: (employeeInput) => employeeInput.employeeRole === 'Engineer',
             validate: github => {
                 if (github) {
                     return true
@@ -136,7 +137,7 @@ const addEmployee = () => {
             type: 'input',
             name: 'school',
             message: 'Enter employees school',
-            when: (employeeInput) => employeeInput.role === 'Intern',
+            when: (employeeInput) => employeeInput.employeeRole === 'Intern',
             validate: school => {
                 if (school) {
                     return true
@@ -146,44 +147,47 @@ const addEmployee = () => {
                 }
             }
         },
-        addAnotherEmployee()
     ])
     .then(employeeObj => {
         let { employeeName, employeeRole, employeeId, employeeEmail, github, school} = employeeObj;
 
         let employee;
 
-        if (role === 'Intern') {
+        if (employeeRole === 'Intern') {
             employee = new Intern (employeeName, employeeId, employeeEmail, school);
-        } else if (role === 'Engineer') {
+        } else if (employeeRole === 'Engineer') {
             employee = new Engineer (employeeName, employeeId, employeeEmail, github);
         }
 
         employeeArr.push(employee);
+        console.log(employee);
     })
 }
 
-const addAnotherEmployee = () => {
-    inquirer.prompt([
-        {
-            type: 'confirm',
-            name: 'confirmAnotherEmployee',
-            message: 'Would you like to add another employee?'
-        }
-    ])
-    .then(response => {
-        if(response.confirmAnotherEmployee) {
-            addEmployee();
-        } else {
-            const startApp = generateHTML(employeeArr);
+// const addAnotherEmployee = () => {
+//     inquirer.prompt([
+//         {
+//             type: 'confirm',
+//             name: 'confirmAnotherEmployee',
+//             message: 'Would you like to add another employee?'
+//         }
+//     ])
+//     .then(response => {
+//         if(response.confirmAnotherEmployee) {
+//             addEmployee();
+//         } else {
+//             const startApp = generateHTML(employeeArr);
 
-            fs.writeFile('./dist/index.html', startApp, err => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log("Your application has been created!")
-                }
-            })
-        }
-    })
-}
+//             fs.writeFile('./dist/index.html', startApp, err => {
+//                 if (err) {
+//                     console.log(err);
+//                 } else {
+//                     console.log("Your application has been created!")
+//                 }
+//             })
+//         }
+//     })
+// }
+
+addManager()
+    .then(addEmployee);

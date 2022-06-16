@@ -18,7 +18,7 @@ const generateHTMLPage = (allEmployeeCards) => {
     
         <section class="container mt-5">
             <div class="row row-cols-4 card-group justify-content-between">
-                ${allEmployeeCards}
+                ${createPage()}
             </div>
         </section>
     </body>

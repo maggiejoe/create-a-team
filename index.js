@@ -1,10 +1,13 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
-const Employee = require('./lib/Employee')
+const createHTML = require('./src/generateHTML');
+
+// const Employee = require('./lib/Employee')
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
+const { create } = require('domain');
 
 const employeeArr = [];
 
@@ -189,5 +192,26 @@ const addEmployee = () => {
 //     })
 // }
 
+const writeFile = data => {
+    fs.writeFile('./dist/index.html', data, err => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Your HTML file has been created!')
+        }
+    })
+}
+
 addManager()
-    .then(addEmployee);
+    .then(addEmployee)
+    .then(employeeArr => {
+        return createHTML(employeeArr);
+    })
+    .then(HTMLfile => {
+        return writeFile(HTMLfile);
+    })
+    .catch(err => {
+        if (err) {
+            console.log(err);
+        }
+    });

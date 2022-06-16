@@ -12,14 +12,12 @@ const generateHTMLPage = (allEmployeeCards) => {
     </head>
     <body>
         
-        <header>
-            <!-- add in a navbar -->
-            <h2>Your Team</h2>
+        <header class="bg-success bg-gradient p-5">
+            <h2 class="text-center fw-bolder">Your Team</h2>
         </header>
     
-        <section>
-            <!-- Contains all employee cards -->
-            <div class="card-group">
+        <section class="container mt-5">
+            <div class="row row-cols-4 card-group justify-content-between">
                 ${allEmployeeCards}
             </div>
         </section>
@@ -28,38 +26,44 @@ const generateHTMLPage = (allEmployeeCards) => {
 };
 
 const createManagerCard = (manager) => {
-    `<div class="card">
-        <h2>${manager.managerName}</h2>
-        <h3>Manager</h3>
-        <ul>
-            <li>${manager.managerID}</li>
-            <li><a href="mailto:${manager.managerEmail}">Email: ${manager.managerEmail}</a></li>
-            <li>Office Number: ${manager.officeNumber}</li>
-        </ul>
+    `<div>
+        <div class="card p-0 border-dark border-2 rounded-3">
+            <h2 class="card-title fw-bold text-center bg-success bg-opacity-50 p-2">${manager.managerName}</h2>
+            <h3 class="text-center">Manager</h3>
+            <ul class="text-center list-group border-0">
+                <li class="list-group-item border-0">${manager.managerID}</li>
+                <li class="list-group-item border-0"><a href="mailto:${manager.managerEmail}">${manager.managerEmail}</a></li>
+                <li class="list-group-item border-0">Office Number: ${manager.officeNumber}</li>
+            </ul>
+        </div>
     </div>`
 };
 
 const createEngineerCard = (engineer) => {
-    `<div class="card">
-        <h2>${engineer.employeeName}</h2>
-        <h2>Engineer</h2>
-        <ul>
-            <li>ID: ${engineer.employeeId}</li>
-            <li><a href="mailto:${engineer.employeeEmail}">Email: ${engineer.employeeEmail}</a></li>
-            <li><a href="https://github.com/${engineer.github}">GitHub: ${engineer.github}</a></li>
-        </ul>
+    `<div>
+        <div class="card p-0 border-dark border-2 rounded-3">
+            <h2 class="card-title fw-bold text-center bg-success bg-opacity-50 p-2">${engineer.employeeName}</h2>
+            <h3 class="text-center">Engineer</h3>
+            <ul class="text-center list-group border-0">
+                <li class="list-group-item border-0">${engineer.employeeId}</li>
+                <li class="list-group-item border-0"><a href="mailto:${engineer.engineerEmail}">${engineer.engineerEmail}</a></li>
+                <li class="list-group-item border-0"><a href="https://github.com/maggiejoe">GitHub: ${engineer.github}</a></li>
+            </ul>
+        </div>
     </div>`
 };
 
 const createInternCard = (intern) => {
-    `<div class="card">
-        <h2>${intern.employeeName}</h2>
-        <h2>Engineer</h2>
-        <ul>
-            <li>ID: ${intern.employeeId}</li>
-            <li><a href="mailto:${intern.employeeEmail}">Email: ${intern.employeeEmail}</a></li>
-            <li>School: ${intern.school}</li>
-        </ul>
+    `<div>
+        <div class="card p-0 border-dark border-2 rounded-3">
+            <h2 class="card-title fw-bold text-center bg-success bg-opacity-50 p-2">${intern.employeeName}</h2>
+            <h3 class="text-center">Intern</h3>
+            <ul class="text-center list-group border-0">
+                <li class="list-group-item border-0">${intern.employeeId}</li>
+                <li class="list-group-item border-0"><a href="mailto:${intern.employeeEmail}">${intern.employeeEmail}</a></li>
+                <li class="list-group-item border-0">School: ${intern.school}</li>
+            </ul>
+        </div>
     </div>`
 };
 

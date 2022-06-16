@@ -204,13 +204,12 @@ const writeFile = data => {
 
 addManager()
     .then(addEmployee)
-    .then(employeeArr => {
-        return createHTML(employeeArr);
+    .then((employeeArr) => {
+        const employeeString = createHTML(employeeArr);
+
+        writeFile(employeeString);
     })
-    .then(HTMLfile => {
-        return writeFile(HTMLfile);
-    })
-    .catch(err => {
+    .catch((err) => {
         if (err) {
             console.log(err);
         }

@@ -8,11 +8,32 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
 const { create } = require('domain');
+const { listenerCount } = require('process');
 
 const employeeArr = [];
 
+const mainMenu = () => {
+    inquirer.prompt({
+        type: 'list',
+        name: 'direction',
+        message: 'What type of employee would you like to create?',
+        choices: ['Manager', 'New Employee', 'Exit']
+    })
+    .then (({ direction }) => {
+        // console.log(responses);
+        if (direction === 'Manager') {
+            addManager();
+        } else if (direction === 'New Employee') {
+            addEmployee();
+        }
+        else {
+            writeFile(employeeArr);
+        }
+    })
+}
+
 const addManager = () => {
-    return inquirer.prompt([
+    inquirer.prompt([
         {
             type: 'input',
             name: 'managerName',
@@ -71,12 +92,13 @@ const addManager = () => {
         const manager = new Manager (managerName, managerId, managerEmail, officeNumber);
 
         employeeArr.push(manager);
-        console.log(manager);
+        console.log(employeeArr);
+        mainMenu();
     })
 }
 
 const addEmployee = () => {
-    return inquirer.prompt([
+    inquirer.prompt([
         {
             type: 'input',
             name: 'employeeName',
@@ -163,37 +185,14 @@ const addEmployee = () => {
         }
 
         employeeArr.push(employee);
-        console.log(employee);
+        // console.log(employee);
+        mainMenu();
     })
 }
 
-// const addAnotherEmployee = () => {
-//     inquirer.prompt([
-//         {
-//             type: 'confirm',
-//             name: 'confirmAnotherEmployee',
-//             message: 'Would you like to add another employee?'
-//         }
-//     ])
-//     .then(response => {
-//         if(response.confirmAnotherEmployee) {
-//             addEmployee();
-//         } else {
-//             const startApp = generateHTML(employeeArr);
-
-//             fs.writeFile('./dist/index.html', startApp, err => {
-//                 if (err) {
-//                     console.log(err);
-//                 } else {
-//                     console.log("Your application has been created!")
-//                 }
-//             })
-//         }
-//     })
-// }
-
 const writeFile = data => {
-    fs.writeFile('./dist/index.html', data, err => {
+    // console.log(data);
+    fs.writeFile('./dist/index.html', createHTML(data), err => {
         if (err) {
             console.log(err);
         } else {
@@ -202,17 +201,20 @@ const writeFile = data => {
     })
 }
 
-addManager()
-    .then(addEmployee)
-    .then((employeeArr) => {
-        console.log(employeeArr);
+mainMenu();
+
+// addManager()
+    // .then(addEmployee)
+    // .then((employeeArr) => {
+    //     console.log(employeeArr);
+    //     writeFile(createHTML(employeeArr));
         // return createHTML(employeeArr);
-    })
+    // })
     // .then(createHTML => {
     //     return writeFile(createHTML);
     // })
-    .catch((err) => {
-        if (err) {
-            console.log(err);
-        }
-    });
+    // .catch((err) => {
+    //     if (err) {
+    //         console.log(err);
+    //     }
+    // });

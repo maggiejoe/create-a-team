@@ -1,4 +1,5 @@
-const generateHTMLPage = (allEmployeeCards) => {
+const generateHTMLPage = (team) => {
+    console.log(team);
     return `
     <!DOCTYPE html>
     <html lang="en">
@@ -17,8 +18,8 @@ const generateHTMLPage = (allEmployeeCards) => {
         </header>
     
         <section class="container mt-5">
-            <div class="row row-cols-4 card-group justify-content-between">
-                ${createPage()}
+            <div class="row row-cols-4 card-group justify-content-evenly">
+                ${createPage(team)}
             </div>
         </section>
     </body>
@@ -26,77 +27,87 @@ const generateHTMLPage = (allEmployeeCards) => {
 };
 
 const createManagerCard = (manager) => {
-    `<div>
+    return `
+    <div>
         <div class="card p-0 border-dark border-2 rounded-3">
-            <h2 class="card-title fw-bold text-center bg-success bg-opacity-50 p-2">${manager.managerName}</h2>
+            <h2 class="card-title fw-bold text-center bg-success bg-opacity-50 p-2">${manager.getName()}</h2>
             <h3 class="text-center">Manager</h3>
             <ul class="text-center list-group border-0">
-                <li class="list-group-item border-0">${manager.managerID}</li>
-                <li class="list-group-item border-0"><a href="mailto:${manager.managerEmail}">${manager.managerEmail}</a></li>
-                <li class="list-group-item border-0">Office Number: ${manager.officeNumber}</li>
+                <li class="list-group-item border-0">${manager.getId()}</li>
+                <li class="list-group-item border-0"><a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></li>
+                <li class="list-group-item border-0">Office Number: ${manager.getOfficeNumber()}</li>
             </ul>
         </div>
     </div>`
 };
 
 const createEngineerCard = (engineer) => {
-    `<div>
+    return `
+    <div>
         <div class="card p-0 border-dark border-2 rounded-3">
-            <h2 class="card-title fw-bold text-center bg-success bg-opacity-50 p-2">${engineer.employeeName}</h2>
+            <h2 class="card-title fw-bold text-center bg-success bg-opacity-50 p-2">${engineer.getName()}</h2>
             <h3 class="text-center">Engineer</h3>
             <ul class="text-center list-group border-0">
-                <li class="list-group-item border-0">${engineer.employeeId}</li>
-                <li class="list-group-item border-0"><a href="mailto:${engineer.engineerEmail}">${engineer.engineerEmail}</a></li>
-                <li class="list-group-item border-0"><a href="https://github.com/maggiejoe">GitHub: ${engineer.github}</a></li>
+                <li class="list-group-item border-0">${engineer.getId()}</li>
+                <li class="list-group-item border-0"><a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></li>
+                <li class="list-group-item border-0"><a href="https://github.com/maggiejoe">GitHub: ${engineer.getGithub()}</a></li>
             </ul>
         </div>
     </div>`
 };
 
 const createInternCard = (intern) => {
-    `<div>
+    return `
+    <div>
         <div class="card p-0 border-dark border-2 rounded-3">
-            <h2 class="card-title fw-bold text-center bg-success bg-opacity-50 p-2">${intern.employeeName}</h2>
+            <h2 class="card-title fw-bold text-center bg-success bg-opacity-50 p-2">${intern.getName()}</h2>
             <h3 class="text-center">Intern</h3>
             <ul class="text-center list-group border-0">
-                <li class="list-group-item border-0">${intern.employeeId}</li>
-                <li class="list-group-item border-0"><a href="mailto:${intern.employeeEmail}">${intern.employeeEmail}</a></li>
-                <li class="list-group-item border-0">School: ${intern.school}</li>
+                <li class="list-group-item border-0">${intern.getId()}</li>
+                <li class="list-group-item border-0"><a href="mailto:${intern.getEmail()}">${intern.getEmail()}</a></li>
+                <li class="list-group-item border-0">School: ${intern.getSchool()}</li>
             </ul>
         </div>
     </div>`
 };
 
-createPage = (pageData) => {
+createPage = (team) => {
+    console.log(team);
     pageArr = [];
 
-    for (i = 0; i < pageData.length; i++) {
-        const employee = pageData[i];
-        const employeeRole = employee.getRole();
+    pageArr.push(team.filter(employee => employee.getRole() === 'Manager').map(manager => createManagerCard(manager)));
+    pageArr.push(team.filter(employee => employee.getRole() === 'Engineer').map(engineer => createEngineerCard(engineer)).join(''));
+    pageArr.push(team.filter(employee => employee.getRole() === 'Intern').map(intern => createInternCard(intern)).join(''));
 
-        if (employeeRole === manager) {
-            const managerCard = createManagerCard(employee);
+    console.log(pageArr);
 
-        PageArr.push(managerCard);
-        }
+    return pageArr.join('');
+    // for (i = 0; i < pageData.length; i++) {
+    //     const employee = pageData[i];
+    //     const employeeRole = employee.getRole();
 
-        if (employeeRole === engineer) {
-            const engineerCard = createEngineerCard(employee);
+    //     if (employeeRole === manager) {
+    //         const managerCard = createManagerCard(employee);
 
-        PageArr.push(engineerCard);
-        }
+    //     PageArr.push(managerCard);
+    //     }
 
-        if (employeeRole === Intern) {
-            const internCard = createInternCard(employee);
+    //     if (employeeRole === engineer) {
+    //         const engineerCard = createEngineerCard(employee);
+    //     PageArr.push(engineerCard);
+    //     }
 
-        PageArr.push(internCard);
-        }
-    }
+    //     if (employeeRole === Intern) {
+    //         const internCard = createInternCard(employee);
 
-    const allEmployeeCards = pageArr.join('')
+    //     PageArr.push(internCard);
+    //     }
+    // }
 
-    const generateEmployees = generateHTMLPage(allEmployeeCards);
-    return generateEmployees;
+    // const allEmployeeCards = pageArr.join('')
+
+    // const generateEmployees = generateHTMLPage(allEmployeeCards);
+    // return generateEmployees;
 };
 
 module.exports = generateHTMLPage;

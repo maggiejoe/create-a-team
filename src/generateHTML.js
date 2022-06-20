@@ -18,7 +18,7 @@ const generateHTMLPage = (team) => {
         </header>
     
         <section class="container mt-5">
-            <div class="row row-cols-4 card-group justify-content-evenly">
+            <div class="row row-cols-4 card-group justify-content-between">
                 ${createPage(team)}
             </div>
         </section>
@@ -29,7 +29,7 @@ const generateHTMLPage = (team) => {
 const createManagerCard = (manager) => {
     return `
     <div>
-        <div class="card p-0 border-dark border-2 rounded-3">
+        <div class="card p-0 border-dark border-2 rounded-3 mb-5">
             <h2 class="card-title fw-bold text-center bg-success bg-opacity-50 p-2">${manager.getName()}</h2>
             <h3 class="text-center">Manager</h3>
             <ul class="text-center list-group border-0">
@@ -44,7 +44,7 @@ const createManagerCard = (manager) => {
 const createEngineerCard = (engineer) => {
     return `
     <div>
-        <div class="card p-0 border-dark border-2 rounded-3">
+        <div class="card p-0 border-dark border-2 rounded-3 mb-5">
             <h2 class="card-title fw-bold text-center bg-success bg-opacity-50 p-2">${engineer.getName()}</h2>
             <h3 class="text-center">Engineer</h3>
             <ul class="text-center list-group border-0">
@@ -59,7 +59,7 @@ const createEngineerCard = (engineer) => {
 const createInternCard = (intern) => {
     return `
     <div>
-        <div class="card p-0 border-dark border-2 rounded-3">
+        <div class="card p-0 border-dark border-2 rounded-3 mb-5">
             <h2 class="card-title fw-bold text-center bg-success bg-opacity-50 p-2">${intern.getName()}</h2>
             <h3 class="text-center">Intern</h3>
             <ul class="text-center list-group border-0">
